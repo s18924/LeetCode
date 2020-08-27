@@ -3,10 +3,10 @@ package P_002_Add_Two_Numbers;
 public class Solution {
     public static void main(String[] args) {
 
-        printListNode(createListNode("5"));
-        printListNode(createListNode("5"));
+        printListNode(createListNode("81"));
+        printListNode(createListNode("0"));
 
-        ListNode result = new Solution().addTwoNumbers(createListNode("81"), createListNode("0"));
+        ListNode result = new Solution().addTwoNumbers(createListNode("89"), createListNode("1"));
         while (result != null) {
             System.out.println(result.val);
             result = result.next;
@@ -31,36 +31,43 @@ public class Solution {
                 passToNext = 0;
             }
 
-                l1 = l1.next;
+            l1 = l1.next;
+            l2 = l2.next;
 
-                l2 = l2.next;
-
-            if (l1 == null | l2 == null) {
+            if (l1 == null && l2 == null) {
                 if (passToNext == 1)
                     currentNode.next = new ListNode(1);
-                break;
+                return result;
             }
+
+            if (l1 == null | l2 == null)
+                break;
+
 
             currentNode.next = new ListNode();
             currentNode = currentNode.next;
 
         }
 
-        ListNode leftover = l1==null?l2:l1;
-        while (leftover!=null){
-
+        ListNode leftover = l1 == null ? l2 : l1;
+        while (leftover != null) {
+            currentNode.next = new ListNode();
             currentNode = currentNode.next;
-            System.out.println(leftover);
-            System.out.println(currentNode);
-                currentNode.val+=leftover.val;
 
-                leftover=leftover.next;
+            int sum = leftover.val + passToNext;
+            if (sum >= 10) {
+                passToNext = 1;
+                sum -= 10;
+            } else passToNext = 0;
+
+            currentNode.val += sum;
+            leftover = leftover.next;
         }
 
-
+        if (passToNext == 1)
+            currentNode.next = new ListNode(1);
 
         return result;
-
     }
 
     public static void printListNode(ListNode listNode) {
@@ -103,14 +110,24 @@ public class Solution {
         }
         currentNode.val = Integer.parseInt(numberToCode[numberToCode.length - 1]);
 
-      /*  for ( String s : new StringBuilder(value).reverse().toString().split("") ){
-            //System.out.println("v");
-            printListNode(result);
-
-        }*/
-
-        currentNode = null;
-
         return result;
     }
 }
+
+/*
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order
+and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Example:
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+
+
+
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Add Two Numbers.
+Memory Usage: 39.9 MB, less than 46.85% of Java online submissions for Add Two Numbers.
+ */
