@@ -4,41 +4,41 @@ import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        System.out.println(new Solution().lengthOfLongestSubstring("bbtablud"));
+        double time = System.currentTimeMillis();
+        System.out.println(new Solution().lengthOfLongestSubstring("aabaab!bb"));
+        System.out.println(System.currentTimeMillis() - time);
     }
 
     public int lengthOfLongestSubstring(String s) {
-        if( s.length() == 0)
-            return 0;
-        if(s.charAt(0) ==  (' '))
-            return 1;
-        int[] characterLastSeen = new int['Z' - 'A' + 1];
-        Arrays.fill(characterLastSeen, -1);
+
+        int[] characterLastSeen = new int[255];
+        Arrays.fill(characterLastSeen, -2);
         char[] word_splitted = s.toCharArray();
 
         int max_length = 0;
         int current_length = 0;
         int offset = -1;
+        int dividedOffset = 0;
 
         for (int char_index = 0; char_index < word_splitted.length; char_index++) {
-            if (characterLastSeen[word_splitted[char_index] -'a'] < offset) {
+            if (characterLastSeen[word_splitted[char_index]] < offset) {
                 current_length++;
 
             } else {
-                offset = characterLastSeen[word_splitted[char_index]-'a'] ;
-                if(current_length > max_length) {
+                dividedOffset = Math.max(offset, 0);
+                offset = characterLastSeen[word_splitted[char_index]] + 1;
+
+                if (current_length > max_length) {
                     max_length = current_length;
-                    System.out.println("New max lenght " + max_length);
                 }
                 current_length++;
                 current_length -= offset;
+                current_length += dividedOffset;
 
             }
-           // System.out.println( (word_splitted[char_index] - 'a'));
-            characterLastSeen[ (word_splitted[char_index] - 'a') ]  = char_index;
-
+            characterLastSeen[(word_splitted[char_index])] = char_index;
         }
-        if(current_length > max_length) {
+        if (current_length > max_length) {
             max_length = current_length;
         }
 
@@ -48,6 +48,11 @@ public class Solution {
 }
 
 /*
+
+Runtime: 2 ms, faster than 99.86% of Java online submissions for Longest Substring Without Repeating Characters.
+Memory Usage: 39.7 MB, less than 75.46% of Java online submissions for Longest Substring Without Repeating Characters.
+
+
 Given a string, find the length of the longest substring without repeating characters.
 
 Example 1:
