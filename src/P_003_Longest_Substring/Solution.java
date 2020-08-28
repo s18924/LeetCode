@@ -21,28 +21,20 @@ public class Solution {
         int dividedOffset = 0;
 
         for (int char_index = 0; char_index < word_splitted.length; char_index++) {
-            if (characterLastSeen[word_splitted[char_index]] < offset) {
-                current_length++;
-
-            } else {
+            if (characterLastSeen[word_splitted[char_index]] >= offset) {
                 dividedOffset = Math.max(offset, 0);
                 offset = characterLastSeen[word_splitted[char_index]] + 1;
 
-                if (current_length > max_length) {
-                    max_length = current_length;
-                }
-                current_length++;
-                current_length -= offset;
-                current_length += dividedOffset;
+                max_length = Math.max(current_length, max_length);
 
+                current_length -= (offset - dividedOffset);
             }
+
+            current_length++;
             characterLastSeen[(word_splitted[char_index])] = char_index;
         }
-        if (current_length > max_length) {
-            max_length = current_length;
-        }
 
-
+        max_length = Math.max(current_length, max_length);
         return max_length;
     }
 }
@@ -50,7 +42,7 @@ public class Solution {
 /*
 
 Runtime: 2 ms, faster than 99.86% of Java online submissions for Longest Substring Without Repeating Characters.
-Memory Usage: 39.7 MB, less than 75.46% of Java online submissions for Longest Substring Without Repeating Characters.
+Memory Usage: 39.6 MB, less than 84.18% of Java online submissions for Longest Substring Without Repeating Characters.
 
 
 Given a string, find the length of the longest substring without repeating characters.
