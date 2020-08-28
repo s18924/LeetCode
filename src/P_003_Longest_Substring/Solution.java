@@ -1,15 +1,49 @@
 package P_003_Longest_Substring;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-
+        System.out.println(new Solution().lengthOfLongestSubstring("bbtablud"));
     }
-    public int lengthOfLongestSubstring(String s) {
-        Set<String> letters = new HashSet<>();
 
+    public int lengthOfLongestSubstring(String s) {
+        if( s.length() == 0)
+            return 0;
+        if(s.charAt(0) ==  (' '))
+            return 1;
+        int[] characterLastSeen = new int['Z' - 'A' + 1];
+        Arrays.fill(characterLastSeen, -1);
+        char[] word_splitted = s.toCharArray();
+
+        int max_length = 0;
+        int current_length = 0;
+        int offset = -1;
+
+        for (int char_index = 0; char_index < word_splitted.length; char_index++) {
+            if (characterLastSeen[word_splitted[char_index] -'a'] < offset) {
+                current_length++;
+
+            } else {
+                offset = characterLastSeen[word_splitted[char_index]-'a'] ;
+                if(current_length > max_length) {
+                    max_length = current_length;
+                    System.out.println("New max lenght " + max_length);
+                }
+                current_length++;
+                current_length -= offset;
+
+            }
+           // System.out.println( (word_splitted[char_index] - 'a'));
+            characterLastSeen[ (word_splitted[char_index] - 'a') ]  = char_index;
+
+        }
+        if(current_length > max_length) {
+            max_length = current_length;
+        }
+
+
+        return max_length;
     }
 }
 
