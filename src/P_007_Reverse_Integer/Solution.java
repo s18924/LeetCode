@@ -18,6 +18,7 @@ public class Solution {
         }
         return isNegative ? -res : res;
     }
+
 }
 
 /*
