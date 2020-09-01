@@ -1,12 +1,42 @@
 package P_013_Roman_To_Integer;
 
+import java.util.HashMap;
+
 public class Solution {
 
     public static void main(String[] args) {
         System.out.println(new Solution().romanToInt("LVIII"));
     }
 
-    public int romanToInt(String s) {
+    public int romanToInt(String s) { //This one looks better, but works slower. Probably because of making a hashmap
+        int number=0;
+
+        HashMap<Character, Integer> romanToIntMap = new HashMap<>();
+        romanToIntMap.put('I',1);
+        romanToIntMap.put('V',5);
+        romanToIntMap.put('X',10);
+        romanToIntMap.put('L',50);
+        romanToIntMap.put('C',100);
+        romanToIntMap.put('D',500);
+        romanToIntMap.put('M',1000);
+
+        char[] romanDigits = s.toCharArray();
+
+
+        int previousDigit = romanToIntMap.get(romanDigits[romanDigits.length-1]);
+        number+= previousDigit;
+        for (int i = romanDigits.length-2 ; i >=0 ; i--) { //Assuming that input will be correct, we know that if character is smaller than next character we need to divide it
+
+            int currentDigit = romanToIntMap.get(romanDigits[i]);
+            number+= currentDigit >= previousDigit ? +currentDigit : -currentDigit;
+            previousDigit = currentDigit;
+        }
+
+
+
+        return number;
+    }
+  /*  public int romanToInt(String s) {
 
         int number = 0;
         char[] romanDigits = s.toCharArray();
@@ -76,7 +106,7 @@ public class Solution {
         }
         return number;
 
-    }
+    }*/
 }
 
 /*
