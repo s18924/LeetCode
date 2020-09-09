@@ -1,33 +1,58 @@
 package P_036_Valid_Sudoku;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Solution {
     public static void main(String[] args) {
         System.out.println(new Solution().isValidSudoku(new char[][]{
-                {'5','3','.','.','7','.','.','.','.'},
-                {'6','.','.','1','9','5','.','.','.'},
-                {'.','9','8','.','.','.','.','6','.'},
-                {'8','.','.','.','6','.','.','.','3'},
-                {'4','.','.','8','.','3','.','.','1'},
-                {'7','.','.','.','2','.','.','.','6'},
-                {'.','6','.','.','.','.','2','8','.'},
-                {'.','.','.','4','1','9','.','.','5'},
-                {'.','.','.','.','8','.','.','7','9'}
+                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         }));
 
         System.out.println(new Solution().isValidSudoku(new char[][]{
-                {'8','3','.','.','7','.','.','.','.'},
-                {'6','.','.','1','9','5','.','.','.'},
-                {'.','9','8','.','.','.','.','6','.'},
-                {'8','.','.','.','6','.','.','.','3'},
-                {'4','.','.','8','.','3','.','.','1'},
-                {'7','.','.','.','2','.','.','.','6'},
-                {'.','6','.','.','.','.','2','8','.'},
-                {'.','.','.','4','1','9','.','.','5'},
-                {'.','.','.','.','8','.','.','7','9'}
+                {'8', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
         }));
     }
 
-    public boolean isValidSudoku(char[][] board) {
+    public boolean isValidSudoku(char[][] board) { //HashSet Approach, slower but cleaner
+
+        Set<String> seenNumbers = new HashSet<>();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == '.')
+                    continue;
+                // 0-2 means we seen 2 in 0 row
+                // 0|2 means we seen 2 in 0 column
+                // 0.0x2 means we seen 2 in '0 box' it means from 0-2 i and 0-2 j, 1.0 box is: i{3-5} and j{0-2}
+                if (!seenNumbers.add(i + "-" + board[i][j]) || !seenNumbers.add(j + "|" + board[i][j]) || !seenNumbers.add(((i / 3) + "." + (j / 3)) + "x" + board[i][j]))
+                    return false;
+
+            }
+        }
+
+        return true;
+    }
+
+
+
+/*    public boolean isValidSudoku(char[][] board) {
         boolean[] repeated = new boolean[9]; //We'll be checking all the '9s' on the board, because there mustn't be repeats, it will be cleared after each loop
 
         //rows checking
@@ -75,7 +100,7 @@ public class Solution {
         }
 
         return true;
-    }
+    }*/
 }
 
 /*
