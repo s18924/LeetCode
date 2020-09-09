@@ -30,6 +30,7 @@ public class Solution {
     public boolean isValidSudoku(char[][] board) {
         boolean[] repeated = new boolean[9]; //We'll be checking all the '9s' on the board, because there mustn't be repeats, it will be cleared after each loop
 
+        //rows checking
         for (char[] chars : board) {
             for (int j = 0; j < chars.length; j++) {
                 if (chars[j] == '.') //Continue the loop if value is not set
@@ -43,6 +44,7 @@ public class Solution {
             repeated = new boolean[9];
         }
 
+        //columns checking
         for (int i = 0; i < board[0].length; i++) { //We are doing the same thing as above, but now for columns
             for (int j = 0; j < board.length; j++) {
 
@@ -55,6 +57,22 @@ public class Solution {
             repeated = new boolean[9];
         }
 
+        //box checking
+        for (int i = 0; i < 9; i+=3) {
+            for (int j = 0; j < 9; j+=3) {
+                for (int k = i; k < i+3 ; k++) {
+                    for (int l = j; l < j+3; l++) {
+                        if (board[k][l] == '.')
+                            continue;
+                        if (repeated[board[k][l] - '0' - 1])
+                            return false;
+                        else repeated[board[k][l] - '0' - 1] = true;
+                    }
+                }
+                repeated = new boolean[9];
+            }
+
+        }
 
         return true;
     }
@@ -114,4 +132,8 @@ Note:
     The given board size is always 9x9.
 
 
+
+
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Valid Sudoku.
+Memory Usage: 39.1 MB, less than 96.20% of Java online submissions for Valid Sudoku.
  */
