@@ -9,7 +9,6 @@ public class Solution {
     }
 
     public int romanToInt(String s) { //This one looks better, but works slower. Probably because of making a hashmap
-        int number=0;
 
         HashMap<Character, Integer> romanToIntMap = new HashMap<>();
         romanToIntMap.put('I',1);
@@ -22,17 +21,14 @@ public class Solution {
 
         char[] romanDigits = s.toCharArray();
 
-
         int previousDigit = romanToIntMap.get(romanDigits[romanDigits.length-1]);
-        number+= previousDigit;
+        int number = previousDigit;
         for (int i = romanDigits.length-2 ; i >=0 ; i--) { //Assuming that input will be correct, we know that if character is smaller than next character we need to divide it
 
             int currentDigit = romanToIntMap.get(romanDigits[i]);
             number+= currentDigit >= previousDigit ? +currentDigit : -currentDigit;
             previousDigit = currentDigit;
         }
-
-
 
         return number;
     }
