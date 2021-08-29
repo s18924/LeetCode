@@ -72,7 +72,7 @@ return;
 		ListNode l12 = createListNode(-10,-6,-6,-6,-3,5);
 
 
-		ListNode l21 = createListNode();
+		ListNode l21 = createListNode(1,2,3,4);
 
 		printListNode(l12);
 		printListNode(l21);
