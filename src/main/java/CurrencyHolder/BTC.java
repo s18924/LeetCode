@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class BTC {
 
 	private double price = 50000;
-	private List<PriceDay> priceDayList;
+	List<PriceDay> priceDayList;
 
 	public BTC(String fileName) {
 		readDataFromCSV(fileName);
